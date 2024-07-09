@@ -645,31 +645,6 @@ int ex_se05x_crypto() {
     Se05x_API_Echo(&se05x_session, rand() % 100 + 1);
   }
 
-  /* Se05x_API_Echo(&se05x_session, 0x00);
-  Se05x_API_Echo(&se05x_session, 0x5);
-  Se05x_API_Echo(&se05x_session, 0x15);
-  Se05x_API_Echo(&se05x_session, 0x25);
-  Se05x_API_Echo(&se05x_session, 0x35);
-  Se05x_API_Echo(&se05x_session, 0x45); */
-
-  /*  cnt = 1;
-   ex_generate_nist256_key(&se05x_session);
-   ex_set_get_nist256_key(&se05x_session);
-*/
-  /*
-     cnt = 3;
-     ex_generate_nist256_key(&se05x_session);
-     ex_set_get_nist256_key(&se05x_session);
-
-     ex_nist256_sign_verify(&se05x_session);
-     ex_set_certificate(&se05x_session);
-     ex_ecdh(&se05x_session);
-     ex_aes_ECB_NOPAD(&se05x_session);
-     ex_aes_CBC_NOPAD(&se05x_session);
-     ex_aes_CTR(&se05x_session);
-     ex_nist256_sign_policy(&se05x_session);
-  */
-
   status = Se05x_API_SessionClose(&se05x_session);
   if (status != SM_OK) {
     SMLOG_E("Error in Se05x_API_SessionClose \n");

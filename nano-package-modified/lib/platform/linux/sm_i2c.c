@@ -98,12 +98,6 @@ void axI2CTerm(void *conn_ctx, int mode) {
 
 i2c_error_t axI2CWrite(void *conn_ctx, unsigned char bus, unsigned char addr,
                        unsigned char *pTx, unsigned short txLen) {
-/*   SMLOG_I("I2C Write Len: %d\n", txLen);
-  SMLOG_I("First bytes:\n");
-  for (int i = 0; i < txLen && i < 10; ++i) {
-    SMLOG_I("0x%x ", pTx[i]);
-  }
-  SMLOG_I("\n"); */
 
   int nrWritten = -1;
   i2c_error_t rv;

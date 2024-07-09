@@ -1142,7 +1142,7 @@ exit:
  *
  ******************************************************************************/
 static bool_t phNxpEseProto7816_ProcessResponse(void *conn_ctx) {
-  SMLOG_I("##### 7816 Processing Response...\n");
+  //SMLOG_I("##### 7816 Processing Response...\n");
 
   uint32_t data_len = 0;
   uint8_t *p_data = NULL;
@@ -1251,7 +1251,7 @@ static bool_t phNxpEseProto7816_ProcessResponse(void *conn_ctx) {
       }
     }
   }
-  SMLOG_I("##### 7816 Responsed processed!\n\n");
+  //SMLOG_I("##### 7816 Responsed processed!\n\n");
 
   return status;
 }

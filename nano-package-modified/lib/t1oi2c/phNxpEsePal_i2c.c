@@ -115,7 +115,7 @@ int phPalEse_i2c_read(void *pDevHandle, uint8_t *pBuffer, int nNbBytesToRead)
     int ret = -1, retryCount = 0;
     
     int numRead = 0;
-    SMLOG_D("%s Read Requested %d bytes ", __FUNCTION__, nNbBytesToRead);
+    //SMLOG_D("%s Read Requested %d bytes ", __FUNCTION__, nNbBytesToRead);
     //sm_sleep(ESE_POLL_DELAY_MS);
     while (numRead != nNbBytesToRead) {
         ret = axI2CRead(pDevHandle, I2C_BUS_0, SMCOM_I2C_ADDRESS, pBuffer, nNbBytesToRead);
