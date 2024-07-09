@@ -467,7 +467,7 @@ static int phNxpEse_readPacket(void *conn_ctx, void *pDevHandle,
 
     if (pBuffer[0] == RECIEVE_PACKET_SOF) {
       /* Read the HEADR of Two bytes*/
-      SMLOG_D("%s Read HDR", __FUNCTION__);
+      //SMLOG_D("%s Read HDR", __FUNCTION__);
       pBuffer[0] = RECIEVE_PACKET_SOF;
 #if defined(T1oI2C_UM11225)
       numBytesToRead = 1;
@@ -543,10 +543,10 @@ static int phNxpEse_readPacket(void *conn_ctx, void *pDevHandle,
     T_SMLOG_D("%s SOF FOUND", __FUNCTION__);
     /* Read the HEADR of one/Two bytes based on how two bytes read A5 PCB or 00
      * A5*/
-    SMLOG_D(
+   /*  SMLOG_D(
         "Reading %d for Read the HEADR of one/Two bytes based on how two bytes "
         "read A5 PCB or 00\n",
-        (nNbBytesToRead));
+        (nNbBytesToRead)); */
 
     ret = phPalEse_i2c_read(pDevHandle, &pBuffer[1 + headerIndex],
                             numBytesToRead);
@@ -569,8 +569,8 @@ static int phNxpEse_readPacket(void *conn_ctx, void *pDevHandle,
     nNbBytesToRead = (pBuffer[2] << 8 & 0xFF) | (pBuffer[3] & 0xFF);
 #endif
     /* Read the Complete data + two byte CRC*/
-    SMLOG_D("Reading %d for the Complete data + two byte CRC\n",
-            (nNbBytesToRead + PH_PROTO_7816_CRC_LEN));
+   /*  SMLOG_D("Reading %d for the Complete data + two byte CRC\n",
+            (nNbBytesToRead + PH_PROTO_7816_CRC_LEN)); */
 
     ret = phPalEse_i2c_read(pDevHandle, &pBuffer[PH_PROTO_7816_HEADER_LEN],
                             (nNbBytesToRead + PH_PROTO_7816_CRC_LEN));

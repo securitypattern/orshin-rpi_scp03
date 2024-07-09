@@ -18,11 +18,10 @@
     return 1;                               \
   }
 
-#define EX_PASS                             \
-  {                                         \
-    SMLOG_I("%s, PASSED \n", __FUNCTION__); \
-    return 0;                               \
-  }
+/*  SMLOG_I("%s, PASSED \n", __FUNCTION__); \*/
+
+#define EX_PASS \
+  { return 0; }
 
 #define TEST_ID_BASE 0x7B000100
 #define SET_CERT_BLK_SIZE 128
@@ -61,12 +60,12 @@ uint8_t cnt;
 void print_key(uint8_t *key_buf, size_t key_buflen) {
   size_t i = 0;
   for (i = 0; i < key_buflen; i++) {
-    SMLOG_I("%02x ", key_buf[i]);
+    // SMLOG_I("%02x ", key_buf[i]);
     if ((i + 1) % 8 == 0 && i != 0) {
-      SMLOG_I("\n");
+      // SMLOG_I("\n");
     }
   }
-  SMLOG_I("\n");
+  // SMLOG_I("\n");
 }
 
 int ex_get_version(pSe05xSession_t session_ctx) {
@@ -615,6 +614,15 @@ void ex_set_scp03_keys(pSe05xSession_t session_ctx) {
   return;
 }
 
+const uint32_t MIN_BYTES_SENT = 3;
+#define TOTAL_PACKETS 10
+
+#include <inttypes.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <sys/time.h>
+
+
 int ex_se05x_crypto() {
   smStatus_t status;
 
@@ -624,8 +632,12 @@ int ex_se05x_crypto() {
 
   srand(time(0));
 
-
   ex_set_scp03_keys(&se05x_session);
+  SMLOG_I("Opening channel...\n");
+
+  struct timeval stop, start;
+  gettimeofday(&start, NULL);
+  // do stuff
 
   status = Se05x_API_SessionOpen(&se05x_session);
   if (status != SM_OK) {
@@ -638,11 +650,38 @@ int ex_se05x_crypto() {
     ex_generate_nist256_key(&se05x_session);
     ex_set_get_nist256_key(&se05x_session);
   }
-  int i = 0;
+  uint64_t total_bytes_sent = 0;
+  uint64_t total_micros = 0;
+  gettimeofday(&stop, NULL);
 
-  for (int i = 0; i < 2000; ++i) {
-    SMLOG_D("Echo %d\n", ++i);
-    Se05x_API_Echo(&se05x_session, rand() % 100 + 1);
+  uint64_t channel_open_millis =
+      ((stop.tv_sec - start.tv_sec) * 1000000 + stop.tv_usec - start.tv_usec) /
+      1000;
+
+  for (int i = 0; i < TOTAL_PACKETS; ++i) {
+    // sleep(2);
+    uint32_t bytes_to_be_sent = rand() % 100 + MIN_BYTES_SENT;
+
+    SMLOG_I("Sending %d random bytes, first %d: [", bytes_to_be_sent,
+            MIN_BYTES_SENT);
+
+    for (uint16_t i = 0; i < bytes_to_be_sent; i++) {
+      se05x_session.apdu_buffer[i] = rand() % 256;
+
+      if (i < MIN_BYTES_SENT) {
+        SMLOG_I(" 0x%x ", se05x_session.apdu_buffer[i]);
+      }
+    }
+    
+    SMLOG_I("]\n");
+
+    gettimeofday(&start, NULL);
+    Se05x_API_Echo(&se05x_session, bytes_to_be_sent, se05x_session.apdu_buffer);
+    gettimeofday(&stop, NULL);
+
+    total_bytes_sent += bytes_to_be_sent;
+    total_micros +=
+        ((stop.tv_sec - start.tv_sec) * 1000000 + stop.tv_usec - start.tv_usec);
   }
 
   status = Se05x_API_SessionClose(&se05x_session);
@@ -651,7 +690,11 @@ int ex_se05x_crypto() {
     return 1;
   }
 
-  SMLOG_I("Program done!\n");
-
+  SMLOG_I("Program done!\n\n");
+  SMLOG_I("Channel opened in %"PRIu64"ms\n", channel_open_millis);
+  SMLOG_I("Sent a total of %" PRIu64
+          " bytes in %lums for an average of ~%" PRIu64 "us per byte.\n",
+          total_bytes_sent, total_micros / 1000,
+          total_micros / total_bytes_sent);
   return 0;
 }

@@ -52,7 +52,7 @@ smStatus_t Se05x_API_SessionOpen(pSe05xSession_t session_ctx) {
 
   buff_len = sizeof(session_ctx->apdu_buffer);
 
-  //INFO: Does not interact with i2c
+  // INFO: Does not interact with i2c
   ret = smComT1oI2C_Init(&session_ctx->conn_context, NULL);
   ENSURE_OR_GO_CLEANUP(SM_OK == ret);
 
@@ -250,31 +250,21 @@ cleanup:
 
 #include <time.h>
 
-smStatus_t Se05x_API_Echo(pSe05xSession_t session_ctx, uint16_t len) {
+extern uint32_t MIN_BYTES_SENT;
 
-
+smStatus_t Se05x_API_Echo(pSe05xSession_t session_ctx, uint16_t len, uint8_t *pCmdbuf) {
   smStatus_t retStatus = SM_NOT_OK;
   tlvHeader_t hdr = {{kSE05x_CLA, 0x06, kSE05x_P1_DEFAULT, kSE05x_P2_DEFAULT}};
-  size_t cmdbufLen = 0;
-  uint8_t *pCmdbuf = NULL;
   uint8_t *pRspbuf = NULL;
   size_t rspbufLen = 0;
 
   ENSURE_OR_GO_CLEANUP(session_ctx != NULL);
 
-
-  pCmdbuf = &session_ctx->apdu_buffer[0];
+  //pCmdbuf = &session_ctx->apdu_buffer[0];
   pRspbuf = &session_ctx->apdu_buffer[0];
   rspbufLen = sizeof(session_ctx->apdu_buffer);
 
-
-  for (uint16_t i = 0; i < len; i++) {
-    pCmdbuf[i] = rand() % 256;
-  }
-  
-  cmdbufLen = len;
-
-  retStatus = DoAPDUTxRx(session_ctx, &hdr, session_ctx->apdu_buffer, cmdbufLen,
+  retStatus = DoAPDUTxRx(session_ctx, &hdr, pCmdbuf, len,
                          pRspbuf, &rspbufLen, 0);
 
   if (retStatus == SM_OK) {

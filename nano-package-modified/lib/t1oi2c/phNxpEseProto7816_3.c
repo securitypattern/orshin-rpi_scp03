@@ -1284,27 +1284,27 @@ static bool_t TransceiveProcess(void *conn_ctx) {
 
     switch (phNxpEseProto7816_3_Var.phNxpEseProto7816_nextTransceiveState) {
       case SEND_IFRAME:
-        SMLOG_I("SEND IFRAME\n");
+        //SMLOG_I("SEND IFRAME\n");
         status = phNxpEseProto7816_SendIframe(
             conn_ctx, phNxpEseProto7816_3_Var.phNxpEseNextTx_Cntx.IframeInfo);
         break;
       case SEND_R_ACK:
-        SMLOG_I("SEND R_ACK\n");
+        //SMLOG_I("SEND R_ACK\n");
 
         status = phNxpEseProto7816_sendRframe(conn_ctx, RACK);
         break;
       case SEND_R_NACK:
-        SMLOG_I("SEND R_NACK\n");
+        //SMLOG_I("SEND R_NACK\n");
         status = phNxpEseProto7816_sendRframe(conn_ctx, RNACK);
         break;
       case SEND_S_RSYNC:
-        SMLOG_I("SEND S_RSYNC\n");
+        //SMLOG_I("SEND S_RSYNC\n");
 
         sFrameInfo.sFrameType = RESYNCH_REQ;
         status = phNxpEseProto7816_SendSFrame(conn_ctx, sFrameInfo);
         break;
       case SEND_S_WTX_RSP:
-        SMLOG_I("SEND_S_WTX_RSP\n");
+        //SMLOG_I("SEND_S_WTX_RSP\n");
 
         sFrameInfo.sFrameType = WTX_RSP;
         status = phNxpEseProto7816_SendSFrame(conn_ctx, sFrameInfo);

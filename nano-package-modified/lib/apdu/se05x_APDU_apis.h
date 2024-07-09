@@ -9,8 +9,8 @@
 #define SE05X_APDU_APIS_H_INC
 
 /* ********************** Include files ********************** */
-#include "se05x_types.h"
 #include "se05x_tlv.h"
+#include "se05x_types.h"
 
 /** Se05x_API_SessionOpen
  *
@@ -48,42 +48,45 @@ smStatus_t Se05x_API_SessionClose(pSe05xSession_t session_ctx);
  *
  * @rst
  * +---------+------------------------+------------------------------------------------+
- * | Field   | Value                  | Description                                    |
+ * | Field   | Value                  | Description |
  * +=========+========================+================================================+
- * | P1      | :cpp:type:`SE05x_P1_t` | See  :cpp:type:`SE05x_P1_t` ,  P1KeyType       |
- * |         | | P1_EC                | should only be set for new objects.            |
+ * | P1      | :cpp:type:`SE05x_P1_t` | See  :cpp:type:`SE05x_P1_t` ,  P1KeyType
+ * | |         | | P1_EC                | should only be set for new objects. |
  * +---------+------------------------+------------------------------------------------+
- * | P2      | P2_DEFAULT             | See P2                                         |
+ * | P2      | P2_DEFAULT             | See P2 |
  * +---------+------------------------+------------------------------------------------+
- * | Payload | TLV[TAG_POLICY]        | Byte array containing the object policy.       |
- * |         |                        | [Optional: default policy applies]             |
- * |         |                        | [Conditional - only when the object            |
- * |         |                        | identifier is not in use yet]                  |
+ * | Payload | TLV[TAG_POLICY]        | Byte array containing the object policy.
+ * | |         |                        | [Optional: default policy applies] |
+ * |         |                        | [Conditional - only when the object | |
+ * |                        | identifier is not in use yet]                  |
  * +---------+------------------------+------------------------------------------------+
- * |         | TLV[TAG_MAX_ATTEMPTS]  | 2-byte maximum number of attempts. If 0 is     |
- * |         |                        | given, this means unlimited.   [Optional:      |
- * |         |                        | default unlimited]   [Conditional: only when   |
- * |         |                        | the object  identifier is not in use yet and   |
- * |         |                        | INS includes  INS_AUTH_OBJECT; see             |
- * |         |                        | AuthenticationObjectPolicies ]                 |
+ * |         | TLV[TAG_MAX_ATTEMPTS]  | 2-byte maximum number of attempts. If 0
+ * is     | |         |                        | given, this means unlimited.
+ * [Optional:      | |         |                        | default unlimited]
+ * [Conditional: only when   | |         |                        | the object
+ * identifier is not in use yet and   | |         |                        | INS
+ * includes  INS_AUTH_OBJECT; see             | |         | |
+ * AuthenticationObjectPolicies ]                 |
  * +---------+------------------------+------------------------------------------------+
- * |         | TLV[TAG_1]             | 4-byte object identifier                       |
+ * |         | TLV[TAG_1]             | 4-byte object identifier |
  * +---------+------------------------+------------------------------------------------+
- * |         | TLV[TAG_2]             | 1-byte curve identifier, see ECCurve           |
- * |         |                        | [Conditional: only when the object  identifier |
- * |         |                        | is not in use yet; ]                           |
+ * |         | TLV[TAG_2]             | 1-byte curve identifier, see ECCurve |
+ * |         |                        | [Conditional: only when the object
+ * identifier | |         |                        | is not in use yet; ] |
  * +---------+------------------------+------------------------------------------------+
- * |         | TLV[TAG_3]             | Private key value (see  :cpp:type:`ECKeyRef`   |
- * |         |                        | )   [Conditional: only when the private key is |
- * |         |                        | externally generated and P1KeyType is either   |
- * |         |                        | P1_KEY_PAIR  or P1_PRIVATE]                    |
+ * |         | TLV[TAG_3]             | Private key value (see
+ * :cpp:type:`ECKeyRef`   | |         |                        | ) [Conditional:
+ * only when the private key is | |         |                        |
+ * externally generated and P1KeyType is either   | |         | | P1_KEY_PAIR or
+ * P1_PRIVATE]                    |
  * +---------+------------------------+------------------------------------------------+
- * |         | TLV[TAG_4]             | Public key value (see  :cpp:type:`ECKeyRef`  ) |
- * |         |                        | [Conditional: only when the public key is      |
- * |         |                        | externally generated and P1KeyType is either   |
- * |         |                        | P1_KEY_PAIR  or P1_PUBLIC]                     |
+ * |         | TLV[TAG_4]             | Public key value (see
+ * :cpp:type:`ECKeyRef`  ) | |         |                        | [Conditional:
+ * only when the public key is      | |         |                        |
+ * externally generated and P1KeyType is either   | |         | | P1_KEY_PAIR or
+ * P1_PUBLIC]                     |
  * +---------+------------------------+------------------------------------------------+
- * |         | TLV[TAG_11]            | 4-byte version    [Optional]                   |
+ * |         | TLV[TAG_11]            | 4-byte version    [Optional] |
  * +---------+------------------------+------------------------------------------------+
  * @endrst
  *
@@ -102,16 +105,13 @@ smStatus_t Se05x_API_SessionClose(pSe05xSession_t session_ctx);
  * @return     The sm status.
  */
 smStatus_t Se05x_API_WriteECKey(pSe05xSession_t session_ctx,
-    pSe05xPolicy_t policy,
-    SE05x_MaxAttemps_t maxAttempt,
-    uint32_t objectID,
-    SE05x_ECCurve_t curveID,
-    const uint8_t *privKey,
-    size_t privKeyLen,
-    const uint8_t *pubKey,
-    size_t pubKeyLen,
-    const SE05x_INS_t ins_type,
-    const SE05x_KeyPart_t key_part);
+                                pSe05xPolicy_t policy,
+                                SE05x_MaxAttemps_t maxAttempt,
+                                uint32_t objectID, SE05x_ECCurve_t curveID,
+                                const uint8_t *privKey, size_t privKeyLen,
+                                const uint8_t *pubKey, size_t pubKeyLen,
+                                const SE05x_INS_t ins_type,
+                                const SE05x_KeyPart_t key_part);
 
 /** Se05x_API_ReadObject
  *
@@ -196,13 +196,14 @@ smStatus_t Se05x_API_WriteECKey(pSe05xSession_t session_ctx,
  * @param[out] data  [0:kSE05x_TAG_1]
  * @param[in,out] pdataLen Length for data
  */
-smStatus_t Se05x_API_ReadObject(
-    pSe05xSession_t session_ctx, uint32_t objectID, uint16_t offset, uint16_t length, uint8_t *data, size_t *pdataLen);
+smStatus_t Se05x_API_ReadObject(pSe05xSession_t session_ctx, uint32_t objectID,
+                                uint16_t offset, uint16_t length, uint8_t *data,
+                                size_t *pdataLen);
 
 /** Se05x_API_Echo
-* Sends an APDU containing arbitrarily chosen data.
-*/
-smStatus_t Se05x_API_Echo(pSe05xSession_t session_ctx, uint16_t len);
+ * Sends an APDU containing arbitrarily chosen data.
+ */
+smStatus_t Se05x_API_Echo(pSe05xSession_t session_ctx, uint16_t len, uint8_t *);
 
 /** Se05x_API_GetVersion
  *
@@ -215,21 +216,22 @@ smStatus_t Se05x_API_Echo(pSe05xSession_t session_ctx, uint16_t len);
  *
  * @rst
  * +-------+------------------------------+----------------------------------------------+
- * | Field | Value                        | Description                                  |
+ * | Field | Value                        | Description |
  * +=======+==============================+==============================================+
- * | CLA   | 0x80                         |                                              |
+ * | CLA   | 0x80                         | |
  * +-------+------------------------------+----------------------------------------------+
- * | INS   | INS_MGMT                     | See :cpp:type:`SE05x_INS_t`                  |
+ * | INS   | INS_MGMT                     | See :cpp:type:`SE05x_INS_t` |
  * +-------+------------------------------+----------------------------------------------+
- * | P1    | P1_DEFAULT                   | See :cpp:type:`SE05x_P1_t`                   |
+ * | P1    | P1_DEFAULT                   | See :cpp:type:`SE05x_P1_t` |
  * +-------+------------------------------+----------------------------------------------+
- * | P2    | P2_VERSION or P2_VERSION_EXT | See :cpp:type:`SE05x_P2_t`                   |
+ * | P2    | P2_VERSION or P2_VERSION_EXT | See :cpp:type:`SE05x_P2_t` |
  * +-------+------------------------------+----------------------------------------------+
- * | Lc    | #(Payload)                   |                                              |
+ * | Lc    | #(Payload)                   | |
  * +-------+------------------------------+----------------------------------------------+
- * | Le    | 0x00                         | Expecting TLV with 7-byte data  (when P2 =   |
- * |       |                              | P2_VERSION) or a TLV with 37 byte data (when |
- * |       |                              | P2=  P2_VERSION_EXT).                        |
+ * | Le    | 0x00                         | Expecting TLV with 7-byte data (when
+ * P2 =   | |       |                              | P2_VERSION) or a TLV with
+ * 37 byte data (when | |       |                              | P2=
+ * P2_VERSION_EXT).                        |
  * +-------+------------------------------+----------------------------------------------+
  * @endrst
  *
@@ -263,7 +265,9 @@ smStatus_t Se05x_API_Echo(pSe05xSession_t session_ctx, uint16_t len);
  *
  * @return     The sm status.
  */
-smStatus_t Se05x_API_GetVersion(pSe05xSession_t session_ctx, uint8_t *pappletVersion, size_t *appletVersionLen);
+smStatus_t Se05x_API_GetVersion(pSe05xSession_t session_ctx,
+                                uint8_t *pappletVersion,
+                                size_t *appletVersionLen);
 
 /** Se05x_API_ECDSASign
  *
@@ -283,8 +287,8 @@ smStatus_t Se05x_API_GetVersion(pSe05xSession_t session_ctx, uint8_t *pappletVer
  *
  * This is performed according to the ECDSA algorithm as specified in [ANSI
  * X9.62]. The signature (a sequence of two integers 'r' and 's') as
- * returned in the response adheres to the ASN.1 DER encoded formatting rules for
- * integers.
+ * returned in the response adheres to the ASN.1 DER encoded formatting rules
+ * for integers.
  *
  * Command to Applet
  *
@@ -343,13 +347,10 @@ smStatus_t Se05x_API_GetVersion(pSe05xSession_t session_ctx, uint8_t *pappletVer
  * @param[out] signature  [0:kSE05x_TAG_1]
  * @param[in,out] psignatureLen Length for signature
  */
-smStatus_t Se05x_API_ECDSASign(pSe05xSession_t session_ctx,
-    uint32_t objectID,
-    SE05x_ECSignatureAlgo_t ecSignAlgo,
-    const uint8_t *inputData,
-    size_t inputDataLen,
-    uint8_t *signature,
-    size_t *psignatureLen);
+smStatus_t Se05x_API_ECDSASign(pSe05xSession_t session_ctx, uint32_t objectID,
+                               SE05x_ECSignatureAlgo_t ecSignAlgo,
+                               const uint8_t *inputData, size_t inputDataLen,
+                               uint8_t *signature, size_t *psignatureLen);
 
 /** Se05x_API_ECDSAVerify
  *
@@ -363,8 +364,8 @@ smStatus_t Se05x_API_ECDSASign(pSe05xSession_t session_ctx,
  *
  * The key cannot be passed externally to the command directly. In case users
  * want to use the command to verify signatures using different public keys or
- * the public key value regularly changes, the user should create a transient key
- * object to which the key value is written and then the identifier of that
+ * the public key value regularly changes, the user should create a transient
+ * key object to which the key value is written and then the identifier of that
  * transient secure object can be used by this ECDSAVerify command.
  *
  * Command to Applet
@@ -430,14 +431,11 @@ smStatus_t Se05x_API_ECDSASign(pSe05xSession_t session_ctx,
  * @param[in] signatureLen Length of signature
  * @param[out] presult  [0:kSE05x_TAG_1]
  */
-smStatus_t Se05x_API_ECDSAVerify(pSe05xSession_t session_ctx,
-    uint32_t objectID,
-    SE05x_ECSignatureAlgo_t ecSignAlgo,
-    const uint8_t *inputData,
-    size_t inputDataLen,
-    const uint8_t *signature,
-    size_t signatureLen,
-    SE05x_Result_t *presult);
+smStatus_t Se05x_API_ECDSAVerify(pSe05xSession_t session_ctx, uint32_t objectID,
+                                 SE05x_ECSignatureAlgo_t ecSignAlgo,
+                                 const uint8_t *inputData, size_t inputDataLen,
+                                 const uint8_t *signature, size_t signatureLen,
+                                 SE05x_Result_t *presult);
 
 /** Se05x_API_CheckObjectExists
  *
@@ -492,7 +490,9 @@ smStatus_t Se05x_API_ECDSAVerify(pSe05xSession_t session_ctx,
  * @param[in] objectID object id [1:kSE05x_TAG_1]
  * @param[out] presult  [0:kSE05x_TAG_1]
  */
-smStatus_t Se05x_API_CheckObjectExists(pSe05xSession_t session_ctx, uint32_t objectID, SE05x_Result_t *presult);
+smStatus_t Se05x_API_CheckObjectExists(pSe05xSession_t session_ctx,
+                                       uint32_t objectID,
+                                       SE05x_Result_t *presult);
 
 /** Se05x_API_WriteBinary
  *
@@ -539,45 +539,43 @@ smStatus_t Se05x_API_CheckObjectExists(pSe05xSession_t session_ctx, uint32_t obj
  * @param[in] inputDataLen Length of inputData
  */
 smStatus_t Se05x_API_WriteBinary(pSe05xSession_t session_ctx,
-    pSe05xPolicy_t policy,
-    uint32_t objectID,
-    uint16_t offset,
-    uint16_t length,
-    const uint8_t *inputData,
-    size_t inputDataLen);
+                                 pSe05xPolicy_t policy, uint32_t objectID,
+                                 uint16_t offset, uint16_t length,
+                                 const uint8_t *inputData, size_t inputDataLen);
 
 /** Se05x_API_ECDHGenerateSharedSecret
  *
  * The ECDHGenerateSharedSecret command generates a shared secret ECC point on
- * the curve using an EC private key on SE05X and an external public key provided
- * by the caller. The output shared secret is returned to the caller.
+ * the curve using an EC private key on SE05X and an external public key
+ * provided by the caller. The output shared secret is returned to the caller.
  *
  * Command to Applet
  *
  * @rst
  * +------------+------------------------------+----------------------------------------------+
- * | Field      | Value                        | Description                                  |
+ * | Field      | Value                        | Description |
  * +============+==============================+==============================================+
- * | CLA        | 0x80                         |                                              |
+ * | CLA        | 0x80                         | |
  * +------------+------------------------------+----------------------------------------------+
- * | INS        | INS_CRYPTO                   | :cpp:type:`SE05x_INS_t`                      |
+ * | INS        | INS_CRYPTO                   | :cpp:type:`SE05x_INS_t` |
  * +------------+------------------------------+----------------------------------------------+
- * | P1         | P1_EC                        | See :cpp:type:`SE05x_P1_t`                   |
+ * | P1         | P1_EC                        | See :cpp:type:`SE05x_P1_t` |
  * +------------+------------------------------+----------------------------------------------+
- * | P2         | P2_DH                        | See :cpp:type:`SE05x_P2_t`                   |
+ * | P2         | P2_DH                        | See :cpp:type:`SE05x_P2_t` |
  * +------------+------------------------------+----------------------------------------------+
- * | Lc         | #(Payload)                   |                                              |
+ * | Lc         | #(Payload)                   | |
  * +------------+------------------------------+----------------------------------------------+
- * | Payload    | TLV[TAG_1]                   | 4-byte identifier of the key pair or private |
- * |            |                              | key.                                         |
+ * | Payload    | TLV[TAG_1]                   | 4-byte identifier of the key
+ * pair or private | |            |                              | key. |
  * +------------+------------------------------+----------------------------------------------+
- * | TLV[TAG_2] | External public key (see     |                                              |
- * |            | :cpp:type:`ECKeyRef`).       |                                              |
+ * | TLV[TAG_2] | External public key (see     | | |            |
+ * :cpp:type:`ECKeyRef`).       |                                              |
  * +------------+------------------------------+----------------------------------------------+
- * | TLV[TAG_7] | 4-byte HMACKey identifier to |                                              |
- * |            | store output.    [Optional]  |                                              |
+ * | TLV[TAG_7] | 4-byte HMACKey identifier to | | |            | store output.
+ * [Optional]  |                                              |
  * +------------+------------------------------+----------------------------------------------+
- * | Le         | 0x00                         | Expected shared secret length.               |
+ * | Le         | 0x00                         | Expected shared secret length.
+ * |
  * +------------+------------------------------+----------------------------------------------+
  * @endrst
  *
@@ -612,12 +610,9 @@ smStatus_t Se05x_API_WriteBinary(pSe05xSession_t session_ctx,
  * @param[out] sharedSecret  [0:kSE05x_TAG_1]
  * @param[in,out] psharedSecretLen Length for sharedSecret
  */
-smStatus_t Se05x_API_ECDHGenerateSharedSecret(pSe05xSession_t session_ctx,
-    uint32_t objectID,
-    const uint8_t *pubKey,
-    size_t pubKeyLen,
-    uint8_t *sharedSecret,
-    size_t *psharedSecretLen);
+smStatus_t Se05x_API_ECDHGenerateSharedSecret(
+    pSe05xSession_t session_ctx, uint32_t objectID, const uint8_t *pubKey,
+    size_t pubKeyLen, uint8_t *sharedSecret, size_t *psharedSecretLen);
 
 /**
  * @brief      Se05x_API_CipherOneShot
@@ -630,31 +625,32 @@ smStatus_t Se05x_API_ECDHGenerateSharedSecret(pSe05xSession_t session_ctx,
  *
  * @rst
  * +---------+-----------------------+------------------------------------------------+
- * | Field   | Value                 | Description                                    |
+ * | Field   | Value                 | Description |
  * +=========+=======================+================================================+
- * | CLA     | 0x80                  |                                                |
+ * | CLA     | 0x80                  | |
  * +---------+-----------------------+------------------------------------------------+
- * | INS     | INS_CRYPTO            | :cpp:type:`SE05x_INS_t`                        |
+ * | INS     | INS_CRYPTO            | :cpp:type:`SE05x_INS_t` |
  * +---------+-----------------------+------------------------------------------------+
- * | P1      | P1_CIPHER             | See :cpp:type:`SE05x_P1_t`                     |
+ * | P1      | P1_CIPHER             | See :cpp:type:`SE05x_P1_t` |
  * +---------+-----------------------+------------------------------------------------+
- * | P2      | P2_ENCRYPT_ONESHOT or | See :cpp:type:`SE05x_P2_t`                     |
- * |         | P2_DECRYPT_ONESHOT    |                                                |
+ * | P2      | P2_ENCRYPT_ONESHOT or | See :cpp:type:`SE05x_P2_t` | |         |
+ * P2_DECRYPT_ONESHOT    |                                                |
  * +---------+-----------------------+------------------------------------------------+
- * | Lc      | #(Payload)            |                                                |
+ * | Lc      | #(Payload)            | |
  * +---------+-----------------------+------------------------------------------------+
- * | Payload | TLV[TAG_1]            | 4-byte identifier of the key object.           |
+ * | Payload | TLV[TAG_1]            | 4-byte identifier of the key object. |
  * +---------+-----------------------+------------------------------------------------+
- * |         | TLV[TAG_2]            | 1-byte CipherMode                              |
+ * |         | TLV[TAG_2]            | 1-byte CipherMode |
  * +---------+-----------------------+------------------------------------------------+
- * |         | TLV[TAG_3]            | Byte array containing input data.              |
+ * |         | TLV[TAG_3]            | Byte array containing input data. |
  * +---------+-----------------------+------------------------------------------------+
- * |         | TLV[TAG_4]            | Byte array containing an initialization        |
- * |         |                       | vector.   [Optional]   [Conditional: only when |
- * |         |                       | the Crypto Object type equals CC_CIPHER and    |
- * |         |                       | subtype is not including ECB]                  |
+ * |         | TLV[TAG_4]            | Byte array containing an initialization |
+ * |         |                       | vector.   [Optional]   [Conditional: only
+ * when | |         |                       | the Crypto Object type equals
+ * CC_CIPHER and    | |         |                       | subtype is not
+ * including ECB]                  |
  * +---------+-----------------------+------------------------------------------------+
- * | Le      | 0x00                  | Expecting return data.                         |
+ * | Le      | 0x00                  | Expecting return data. |
  * +---------+-----------------------+------------------------------------------------+
  * @endrst
  *
@@ -680,9 +676,11 @@ smStatus_t Se05x_API_ECDHGenerateSharedSecret(pSe05xSession_t session_ctx,
  *
  *
  * @param[in]     session_ctx     The session context
- * @param[in]     objectID        The object id (AES key object with key length = 128 or 192 or 256 bits)
+ * @param[in]     objectID        The object id (AES key object with key length
+ * = 128 or 192 or 256 bits)
  * @param[in]     cipherMode      The cipher mode
- * @param[in]     inputData       The input data (16 Bytes aligned data. Max - 112 Bytes)
+ * @param[in]     inputData       The input data (16 Bytes aligned data. Max -
+ * 112 Bytes)
  * @param[in]     inputDataLen    The input data length
  * @param[in]     IV              Initial vector (16 Bytes)
  * @param[in]     IVLen           The iv length
@@ -692,16 +690,11 @@ smStatus_t Se05x_API_ECDHGenerateSharedSecret(pSe05xSession_t session_ctx,
  *
  * @return     The sm status.
  */
-smStatus_t Se05x_API_CipherOneShot(pSe05xSession_t session_ctx,
-    uint32_t objectID,
-    SE05x_CipherMode_t cipherMode,
-    const uint8_t *inputData,
-    size_t inputDataLen,
-    uint8_t *IV,
-    size_t IVLen,
-    uint8_t *outputData,
-    size_t *poutputDataLen,
-    const SE05x_Cipher_Oper_OneShot_t operation);
+smStatus_t Se05x_API_CipherOneShot(
+    pSe05xSession_t session_ctx, uint32_t objectID,
+    SE05x_CipherMode_t cipherMode, const uint8_t *inputData,
+    size_t inputDataLen, uint8_t *IV, size_t IVLen, uint8_t *outputData,
+    size_t *poutputDataLen, const SE05x_Cipher_Oper_OneShot_t operation);
 
 /** Se05x_API_WriteSymmKey
  *
@@ -721,35 +714,39 @@ smStatus_t Se05x_API_CipherOneShot(pSe05xSession_t session_ctx,
  *
  * @rst
  * +---------+-----------------------+-----------------------------------------------+
- * | Field   | Value                 | Description                                   |
+ * | Field   | Value                 | Description |
  * +=========+=======================+===============================================+
- * | P1      | See above             | See :cpp:type:`SE05x_P1_t`                    |
+ * | P1      | See above             | See :cpp:type:`SE05x_P1_t` |
  * +---------+-----------------------+-----------------------------------------------+
- * | P2      | P2_DEFAULT            | See :cpp:type:`SE05x_P2_t`                    |
+ * | P2      | P2_DEFAULT            | See :cpp:type:`SE05x_P2_t` |
  * +---------+-----------------------+-----------------------------------------------+
- * | Payload | TLV[TAG_POLICY]       | Byte array containing the object policy.      |
- * |         |                       | [Optional: default policy applies]            |
- * |         |                       | [Conditional: only when the object identifier |
- * |         |                       | is not in use yet]                            |
+ * | Payload | TLV[TAG_POLICY]       | Byte array containing the object policy.
+ * | |         |                       | [Optional: default policy applies] | |
+ * |                       | [Conditional: only when the object identifier | |
+ * |                       | is not in use yet]                            |
  * +---------+-----------------------+-----------------------------------------------+
- * |         | TLV[TAG_MAX_ATTEMPTS] | 2-byte maximum number of attempts. If 0 is    |
- * |         |                       | given, this means unlimited.   [Optional:     |
- * |         |                       | default unlimited]   [Conditional: only when  |
- * |         |                       | the object identifier is not in use yet and   |
- * |         |                       | INS includes  INS_AUTH_OBJECT; see            |
- * |         |                       | AuthenticationObjectPolicies]                 |
+ * |         | TLV[TAG_MAX_ATTEMPTS] | 2-byte maximum number of attempts. If 0
+ * is    | |         |                       | given, this means unlimited.
+ * [Optional:     | |         |                       | default unlimited]
+ * [Conditional: only when  | |         |                       | the object
+ * identifier is not in use yet and   | |         |                       | INS
+ * includes  INS_AUTH_OBJECT; see            | |         | |
+ * AuthenticationObjectPolicies]                 |
  * +---------+-----------------------+-----------------------------------------------+
- * |         | TLV[TAG_1]            | 4-byte object identifier                      |
+ * |         | TLV[TAG_1]            | 4-byte object identifier |
  * +---------+-----------------------+-----------------------------------------------+
- * |         | TLV[TAG_2]            | 4-byte KEK identifier   [Conditional: only    |
- * |         |                       | when the key value is RFC3394 wrapped]        |
+ * |         | TLV[TAG_2]            | 4-byte KEK identifier   [Conditional:
+ * only    | |         |                       | when the key value is RFC3394
+ * wrapped]        |
  * +---------+-----------------------+-----------------------------------------------+
- * |         | TLV[TAG_3]            | Key value, either plain or RFC3394 wrapped.   |
+ * |         | TLV[TAG_3]            | Key value, either plain or RFC3394
+ * wrapped.   |
  * +---------+-----------------------+-----------------------------------------------+
- * |         | TLV[TAG_4]            | Tag length for GCM/GMAC. Will only be used if |
- * |         |                       | the object is an  AESKey.   [Optional]        |
+ * |         | TLV[TAG_4]            | Tag length for GCM/GMAC. Will only be
+ * used if | |         |                       | the object is an  AESKey.
+ * [Optional]        |
  * +---------+-----------------------+-----------------------------------------------+
- * |         | TLV[TAG_11]           | 4-byte version    [Optional]                  |
+ * |         | TLV[TAG_11]           | 4-byte version    [Optional] |
  * +---------+-----------------------+-----------------------------------------------+
  * @endrst
  *
@@ -758,7 +755,8 @@ smStatus_t Se05x_API_CipherOneShot(pSe05xSession_t session_ctx,
  * @param[in]  maxAttempt   The maximum attempt
  * @param[in]  objectID     The object id
  * @param[in]  kekID        The kek id
- * @param[in]  keyValue     The key value (Supported lengths - 128, 192 or 256 bits)
+ * @param[in]  keyValue     The key value (Supported lengths - 128, 192 or 256
+ * bits)
  * @param[in]  keyValueLen  The key value length
  * @param[in]  ins_type     The insert type
  * @param[in]  type         The type
@@ -766,14 +764,12 @@ smStatus_t Se05x_API_CipherOneShot(pSe05xSession_t session_ctx,
  * @return     The sm status.
  */
 smStatus_t Se05x_API_WriteSymmKey(pSe05xSession_t session_ctx,
-    pSe05xPolicy_t policy,
-    SE05x_MaxAttemps_t maxAttempt,
-    uint32_t objectID,
-    SE05x_KeyID_t kekID,
-    const uint8_t *keyValue,
-    size_t keyValueLen,
-    const SE05x_INS_t ins_type,
-    const SE05x_SymmKeyType_t type);
+                                  pSe05xPolicy_t policy,
+                                  SE05x_MaxAttemps_t maxAttempt,
+                                  uint32_t objectID, SE05x_KeyID_t kekID,
+                                  const uint8_t *keyValue, size_t keyValueLen,
+                                  const SE05x_INS_t ins_type,
+                                  const SE05x_SymmKeyType_t type);
 
 /** Se05x_API_DeleteSecureObject
  *
@@ -823,6 +819,7 @@ smStatus_t Se05x_API_WriteSymmKey(pSe05xSession_t session_ctx,
  * @param[in] session_ctx Session Context [0:kSE05x_pSession]
  * @param[in] objectID object id [1:kSE05x_TAG_1]
  */
-smStatus_t Se05x_API_DeleteSecureObject(pSe05xSession_t session_ctx, uint32_t objectID);
+smStatus_t Se05x_API_DeleteSecureObject(pSe05xSession_t session_ctx,
+                                        uint32_t objectID);
 
-#endif //#ifndef SE05X_APDU_APIS_H_INC
+#endif  // #ifndef SE05X_APDU_APIS_H_INC

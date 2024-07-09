@@ -36,7 +36,6 @@ static int SE05x_I2C_DEV = 0;
  * Opens the communication channel to I2C device
  */
 i2c_error_t axI2CInit(void **conn_ctx, const char *pDevName) {
-  SMLOG_I("axI2CInit\n");
 
   unsigned long funcs;
   (void)conn_ctx;
@@ -74,7 +73,6 @@ i2c_error_t axI2CInit(void **conn_ctx, const char *pDevName) {
       return I2C_FAILED;
     }
   }
-  SMLOG_I("\n\n\n");
   return I2C_OK;
 }
 
@@ -82,7 +80,6 @@ i2c_error_t axI2CInit(void **conn_ctx, const char *pDevName) {
  * Closes the communication channel to I2C device
  */
 void axI2CTerm(void *conn_ctx, int mode) {
-  SMLOG_I("axI2CTerm\n");
 
   (void)conn_ctx;
   (void)mode;
@@ -91,7 +88,6 @@ void axI2CTerm(void *conn_ctx, int mode) {
   } else {
     SMLOG_I("Close i2c device %d.\n", SE05x_I2C_DEV);
   }
-  SMLOG_I("\n\n\n");
 
   return;
 }
@@ -122,7 +118,6 @@ i2c_error_t axI2CWrite(void *conn_ctx, unsigned char bus, unsigned char addr,
   } else {
     rv = (nrWritten == (txLen + 1)) ? I2C_OK : I2C_FAILED;
   }
-  SMLOG_I("\n\n");
 
   return rv;
 }
