@@ -615,7 +615,7 @@ void ex_set_scp03_keys(pSe05xSession_t session_ctx) {
 }
 
 const uint32_t MIN_BYTES_SENT = 3;
-#define TOTAL_PACKETS 10
+#define TOTAL_PACKETS 100
 
 #include <inttypes.h>
 #include <stdint.h>
