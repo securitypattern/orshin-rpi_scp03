@@ -645,52 +645,20 @@ int ex_se05x_crypto()
     }
 
    
- /*  for (int i = 0; i < TOTAL_PACKETS; ++i) {
-    // sleep(2);
-    uint32_t bytes_to_be_sent = rand() % 100 + MIN_BYTES_SENT;
-
-    SMLOG_I("Sending %d random bytes, first %d: [", bytes_to_be_sent,
-            MIN_BYTES_SENT);
-
-    for (uint16_t i = 0; i < bytes_to_be_sent; i++) {
-      se05x_session.apdu_buffer[i] = rand() % 256;
-
-      if (i < MIN_BYTES_SENT) {
-        SMLOG_I(" 0x%x ", se05x_session.apdu_buffer[i]);
-      }
-    }
-    
-    SMLOG_I("]\n");
-
-    Se05x_API_Echo(&se05x_session, bytes_to_be_sent, se05x_session.apdu_buffer);
-
-  } */
 
     for (uint16_t i = 0; i < 256; i++) {
       se05x_session.apdu_buffer[i] = rand() % 256;
-
-     /*  if (i < MIN_BYTES_SENT) {
-        SMLOG_I(" 0x%x ", se05x_session.apdu_buffer[i]);
-      } */
     }
 
+    sleep(5);
     Se05x_API_Echo(&se05x_session, 0, se05x_session.apdu_buffer);
     Se05x_API_Echo(&se05x_session, 0x5, se05x_session.apdu_buffer);
-    Se05x_API_Echo(&se05x_session, 0x15, se05x_session.apdu_buffer);
-    Se05x_API_Echo(&se05x_session, 0x25, se05x_session.apdu_buffer);
-    Se05x_API_Echo(&se05x_session, 0x35, se05x_session.apdu_buffer);
-    Se05x_API_Echo(&se05x_session, 0x45, se05x_session.apdu_buffer);
-    Se05x_API_Echo(&se05x_session, 0x55, se05x_session.apdu_buffer);
-    Se05x_API_Echo(&se05x_session, 0x65, se05x_session.apdu_buffer);
-    Se05x_API_Echo(&se05x_session, 0x75, se05x_session.apdu_buffer);
-    Se05x_API_Echo(&se05x_session, 0x85, se05x_session.apdu_buffer);
-    /* Se05x_API_Echo(&se05x_session, 0x95, se05x_session.apdu_buffer);
-    Se05x_API_Echo(&se05x_session, 0xA5, se05x_session.apdu_buffer); */
-   /*  Se05x_API_Echo(&se05x_session, 0xB5, se05x_session.apdu_buffer);
-    Se05x_API_Echo(&se05x_session, 0xC5, se05x_session.apdu_buffer);
-    Se05x_API_Echo(&se05x_session, 0xD5, se05x_session.apdu_buffer);
-    Se05x_API_Echo(&se05x_session, 0xE5, se05x_session.apdu_buffer);
-    Se05x_API_Echo(&se05x_session, 0xF5, se05x_session.apdu_buffer); */
+
+    for(int l = 0x15; l < 0x95; l += 0x10){
+        Se05x_API_Echo(&se05x_session, l, se05x_session.apdu_buffer);
+    }
+
+    sleep(5);
 
 
     status = Se05x_API_SessionClose(&se05x_session);
