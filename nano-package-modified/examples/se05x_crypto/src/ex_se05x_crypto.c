@@ -630,14 +630,10 @@ int ex_se05x_crypto() {
       0,
   };
 
-  srand(time(0));
 
   ex_set_scp03_keys(&se05x_session);
   SMLOG_I("Opening channel...\n");
 
-  struct timeval stop, start;
-  gettimeofday(&start, NULL);
-  // do stuff
 
   status = Se05x_API_SessionOpen(&se05x_session);
   if (status != SM_OK) {
@@ -650,51 +646,30 @@ int ex_se05x_crypto() {
     ex_generate_nist256_key(&se05x_session);
     ex_set_get_nist256_key(&se05x_session);
   }
-  uint64_t total_bytes_sent = 0;
-  uint64_t total_micros = 0;
-  gettimeofday(&stop, NULL);
 
-  uint64_t channel_open_millis =
-      ((stop.tv_sec - start.tv_sec) * 1000000 + stop.tv_usec - start.tv_usec) /
-      1000;
-
-  for (int i = 0; i < TOTAL_PACKETS; ++i) {
-    // sleep(2);
-    uint32_t bytes_to_be_sent = rand() % 100 + MIN_BYTES_SENT;
-
-    SMLOG_I("Sending %d random bytes, first %d: [", bytes_to_be_sent,
-            MIN_BYTES_SENT);
-
-    for (uint16_t i = 0; i < bytes_to_be_sent; i++) {
+  for (uint16_t i = 0; i < 0x85; i++) {
       se05x_session.apdu_buffer[i] = rand() % 256;
 
-      if (i < MIN_BYTES_SENT) {
+     /*  if (i < MIN_BYTES_SENT) {
         SMLOG_I(" 0x%x ", se05x_session.apdu_buffer[i]);
-      }
+      } */
     }
-    
-    SMLOG_I("]\n");
+  sleep(5);
+  Se05x_API_Echo(&se05x_session, 0, se05x_session.apdu_buffer);
+  Se05x_API_Echo(&se05x_session, 0x5, se05x_session.apdu_buffer);
 
-    gettimeofday(&start, NULL);
-    Se05x_API_Echo(&se05x_session, bytes_to_be_sent, se05x_session.apdu_buffer);
-    gettimeofday(&stop, NULL);
-
-    total_bytes_sent += bytes_to_be_sent;
-    total_micros +=
-        ((stop.tv_sec - start.tv_sec) * 1000000 + stop.tv_usec - start.tv_usec);
+  for(int l = 0x15; l < 0x95; l += 0x10){
+      Se05x_API_Echo(&se05x_session, l, se05x_session.apdu_buffer);
   }
 
-  status = Se05x_API_SessionClose(&se05x_session);
+  sleep(5);
+
+   status = Se05x_API_SessionClose(&se05x_session);
   if (status != SM_OK) {
     SMLOG_E("Error in Se05x_API_SessionClose \n");
     return 1;
   }
+ 
 
-  SMLOG_I("Program done!\n\n");
-  SMLOG_I("Channel opened in %"PRIu64"ms\n", channel_open_millis);
-  SMLOG_I("Sent a total of %" PRIu64
-          " bytes in %lums for an average of ~%" PRIu64 "us per byte.\n",
-          total_bytes_sent, total_micros / 1000,
-          total_micros / total_bytes_sent);
   return 0;
 }
