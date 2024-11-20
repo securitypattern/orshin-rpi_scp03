@@ -118,7 +118,7 @@ i2c_error_t axI2CWrite(void *conn_ctx, unsigned char bus, unsigned char addr,
   } else {
     rv = (nrWritten == (txLen + 1)) ? I2C_OK : I2C_FAILED;
   }
-
+  free(data);
   return rv;
 }
 
