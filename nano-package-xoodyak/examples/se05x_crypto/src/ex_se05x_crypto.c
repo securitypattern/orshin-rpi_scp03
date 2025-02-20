@@ -639,8 +639,6 @@ int ex_se05x_crypto() {
 
   sleep(5);
   //Se05x_API_Echo(&se05x_session, 0, se05x_session.apdu_buffer);
-  printf("\n\n");
-  sleep(5);
  
   Se05x_API_Echo(&se05x_session, 0x5, se05x_session.apdu_buffer);
 
