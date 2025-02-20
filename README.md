@@ -4,20 +4,22 @@ This directory contains the code of a slightly modified nano-package library, us
 ## Run on the RaspberryPI
 
 ### Compile
+```
 cd nano-package-xoodyak/examples/se05x_crypto/linux/
 mkdir build && cd build
 cmake ../ -DPLUGANDTRUST_SCP03=ON -DPLUGANDTRUST_DEBUG_LOGS=ON
 make
-
+```
 ### Run test
+```
 ./ex_se05x_crypto
-
+```
 ### Connections
 
 #### Raspberry PI4B I2C Master
-Brown: Ground
-Yellow: Clock
-Green: Data
+Brown: Ground\
+Yellow: Clock\
+Green: Data\
 
 ![photo_5888822577600775535_y](https://github.com/user-attachments/assets/7398445e-445a-473f-8a66-527ac9ef053a)
 
