@@ -19,7 +19,7 @@ make
 #### Raspberry PI4B I2C Master
 Brown: Ground\
 Yellow: Clock\
-Green: Data\
+Green: Data
 
 ![photo_5888822577600775535_y](https://github.com/user-attachments/assets/7398445e-445a-473f-8a66-527ac9ef053a)
 
